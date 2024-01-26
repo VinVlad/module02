@@ -2,10 +2,23 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"os"
+	"strconv"
+	"time"
 )
 
+var start time.Time
+
+func LogTime() {
+	duration := time.Since(start)
+	fmt.Printf("Программа была выполнена за %v секунд", duration.Seconds())
+}
+
 func main() {
+	start = time.Now()
+
+	defer LogTime()
 
 	fSource, err := os.OpenFile("./defers/data/in.txt", os.O_RDONLY, 0666)
 	if err != nil {
@@ -18,8 +31,15 @@ func main() {
 
 	s := bufio.NewScanner(fSource)
 
+	t := 0
+
 	for s.Scan() {
-		fDest.Write(s.Bytes())
+		t++
+		fDest.WriteString(strconv.Itoa(t) + ". " + s.Text() + "\n")
+
 	}
+	g, _ := fDest.Stat()
+
+	defer fmt.Printf("В файл записано %v строк и %v байт\n", t, g.Size())
 
 }
