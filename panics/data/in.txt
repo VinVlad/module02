@@ -1,0 +1,3 @@
+Lorem ipsum1|Ulitsa1|Gorod1
+Lorem ipsum2|Ulitsa2|Gorod
+Lorem ipsum3|Gorod3
